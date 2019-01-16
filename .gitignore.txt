@@ -1,3 +1,0 @@
-# ignore all file with .pyc
-
-*.pyc

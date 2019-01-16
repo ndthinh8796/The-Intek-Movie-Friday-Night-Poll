@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from .models import Question, Choice
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 
 # Create your views here.
@@ -33,10 +34,4 @@ def result(request, question_id):
     else:
         selected_choice.votes += 1
         selected_choice.save()
-        return render(request,
-                      'moviepoll/result.html',
-                      {'question': question}
-                     )
-def helloWorld(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    return HttpResponse(request.POST)
+        return HttpResponseRedirect(reverse('moviepoll:detail', args=[question.id]))

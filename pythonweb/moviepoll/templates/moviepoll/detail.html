@@ -1,16 +1,56 @@
-<<h1>{{ question.question_text }}</h1>
+{% extends "moviepoll/base_site.html" %}
+{% block content %}
+  <div class="row">
+    <div class="col-sm-12 mb-4 mt-4">
+      <h2>{{ question.question_text }}</h2>
+    </div>
+  </div>
+  {% if error_message %}
+    <p><strong>{{ error_message }}</strong></p>
+  {% endif %}
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-{% if question.choice_set.all %}
-  <form action="{% url 'moviepoll:result' question.id %}" method="post">
-  {% csrf_token %}
-  {% for choice in question.choice_set.all %}
-    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
-    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
-  {% endfor %}
-  <input type="submit" value="Vote">
-</form>
-{% else %}
-  No movie have been chosen!
-{% endif %}
+  {% if question.choice_set.all %}
+      <form action="{% url 'moviepoll:result' question.id %}" method="post">
+
+          {% csrf_token %}
+
+          <div class=choices>
+            {% for choice in question.choice_set.all %}
+              <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+              <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+            {% endfor %}
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12 mt-4">
+              <input type="submit" class="btn btn-info" value="Vote">
+              <button type="button" class="btn btn-info" data-toggle="modal" data-target="#Mymodal">View Result</button>
+            </div>
+          </div>
+
+          <div id=Mymodal class="modal fade" role="dialog">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">{{ question.question_text }}</h5>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <!-- <h4 class="modal-title">{{ question.question_text }}</h4> -->
+                </div>
+                <div class="modal-body">
+                    {% for choice in question.choice_set.all %}
+                      {{ choice.choice_text }} - {{ choice.votes }} vote{{ choice.votes|pluralize }}<br>
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+      </form>
+  {% else %}
+      No movie have been chosen!
+  {% endif %}
+{% endblock content %}
