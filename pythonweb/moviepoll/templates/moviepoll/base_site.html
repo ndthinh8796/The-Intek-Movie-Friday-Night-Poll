@@ -1,14 +1,33 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
 <head>
     <title>Intek Friday Movie Night</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 </head>
 <body>
-    <div class="container">
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="{% url 'moviepoll:index' %}"><img src="https://scontent.fsgn5-7.fna.fbcdn.net/v/t1.0-9/26804945_2006796546262738_4927907533244910137_n.png?_nc_cat=103&_nc_oc=AQkDSvUT7DKdp_zD_LeDkGaKZMfMcEx4HRLvZE75K89qThYwDzDzn1-YKPA92TkKzhE&_nc_ht=scontent.fsgn5-7.fna&oh=b3cce46ded02ed55863aa76602bc9014&oe=5CC71EAB" width=10% class="img-fluid" alt="intek-logo"> Intek Institute</a>
+        <a class="navbar-brand" href="{% url 'moviepoll:index' %}"><img src="{% static "moviepoll/intek-logo.png" %}" width=10% class="img-fluid" alt="intek-logo"> Intek Institute</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'moviepoll:index' %}">Home</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#"  id="navbarDropdown" data-toggle="dropdown">Polls</a>
+              <div class="dropdown-menu">
+                {% for question in question_list %}
+                    <a class="dropdown-item" href="{% url 'moviepoll:detail' question.id %}">{{ question.question_text }}</a>
+                {% endfor %}
+              </div>
+            </li>
+          </ul>
+        </div>
       </nav>
+    <div class="container">
       {% block content %}{% endblock %}
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

@@ -4,12 +4,15 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 
-# Create your views here.
 def index(request):
-    question_list = Question.objects.order_by('pub_date')
     return render(request,
                   'moviepoll/index.html',
-                  {'question_list': question_list},
+                  )
+
+
+def poll(request):
+    return render(request,
+                  'moviepoll/poll.html',
                   )
 
 

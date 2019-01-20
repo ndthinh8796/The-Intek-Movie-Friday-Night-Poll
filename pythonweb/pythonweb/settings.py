@@ -25,7 +25,7 @@ SECRET_KEY = 'tv137=hr1a^be&r*ozeol%&0_*i(1(1w%rck0*)r6f!*tz5ze_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -63,6 +63,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'moviepoll.context_processors.get_questions',
             ],
         },
     },

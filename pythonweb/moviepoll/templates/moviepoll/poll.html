@@ -1,0 +1,16 @@
+{% extends "moviepoll/base_site.html" %}
+{% block content %}
+  <div class="row">
+    <div class="col-sm-12 mb-4 mt-4">
+      {% if question_list %}
+          <ul>
+              {% for question in question_list %}
+                  <li><a href="{% url 'moviepoll:detail' question.id %}">{{ question.question_text }}</a></li>
+              {% endfor %}
+          </ul>
+      {% else %}
+          No movie yet<br>you can log in as admin to add movie
+      {% endif %}
+      </div>
+    </div>
+{% endblock content %}
